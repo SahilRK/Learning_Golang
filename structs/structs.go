@@ -9,7 +9,8 @@ type person struct {
 	contactInfo
 }
 
-// Lets create another custom type called contact info, which will define the properties of contact
+// EMBEDDING STRUCT
+// Lets create another custom type called contact info, which will define the properties of contact. We will be embedding this inside the person struct.
 type contactInfo struct {
 	phoneNumber int64
 	email       string
@@ -23,7 +24,39 @@ func (p person) print() {
 }
 
 //Create a receiver function to update a persons details
+/*
+2) We then call the updateName function on the pointer rather than on the struct john, since calling it on john will create a copy of the value in the memory and wont modify the original struct.
 
-func (p person) updateName(newFirstName string) {
-	p.firstName = newFirstName
+The * operator tells Go to fetch the value that the pointer variable is pointing to in the memory.
+*/
+
+func (pointerToPerson *person) updateName(newFirstName string) {
+	(*pointerToPerson).firstName = newFirstName
+}
+
+/*
+	 type employee struct {
+		firstName string
+		lastName  string
+		emp_id    int
+		contactDetails
+	}
+
+	type contactDetails struct {
+		emailId      string
+		mobileNumber int
+		address      string
+	}
+*/
+func (emp employee) printName() {
+	fmt.Println("Emp First name is: ", emp.firstName, " and Last name is: ", emp.lastName)
+}
+
+func (emp employee) print() {
+	fmt.Printf("%+v")
+}
+
+func (empPointer *employee) updateEmployeeDetails(propertyName string, propertyValue string) {
+	propertyName1 := propertyName
+	(*empPointer).propertyName1 = propertyValue
 }
